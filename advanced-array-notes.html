@@ -5,8 +5,170 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>8 AdvArr</title>
+    <link rel="stylesheet" href="../notes-style.css">
 </head>
 <body>
-    <h1>Unit 8 &dagger; advanced arrays</h1>
+    <h1><a href="https://www.springboard.com/workshops/software-engineering-career-track/learn#/curriculum/16939">Unit 8</a> &dagger; advanced arrays</h1>
+    <h2>8.1 forEach, map, filter</h2>
+    <ol id="top">
+        <li><a href="http://curric.rithmschool.com/springboard/lectures/js-array-methods-forEach/">handout</a></li>
+        <li>callback functions revisited</li>
+        <ul class="a">
+            <li>built-in options of javascript will accept a callback function</li>
+            <li>reminder:</li>
+            <ul class="b">
+                <li> named functions to be called:
+                    <pre class="code">
+                        function holla () {
+                            console.log('WOOOOOT!');
+                        }
+                    </pre>
+                </li>
+                <li>as a variable:
+                    <pre class="code">
+                        const whisper = function () {
+                            console.log('sshhhhhh');
+                        }
+                    </pre>
+                </li>
+                <li>within an array:
+                    <pre class="code">
+                        function add(x, y) {
+                            return x+y;
+                        }
+                        function subtract(x, y) {
+                            return x-y;
+                        }
+                        function multiply(x, y) {
+                            return x*y;
+                        }
+                        function divide(x, y) {
+                            return x/y;
+                        }
+
+                        const mathFuncs = [ add, subtract, multiply, divide ];
+                    </pre>
+                </li>
+                <li>as an argument:
+                    <pre class="code">
+                        setTimeout(whisper, 4000);
+                    </pre>
+                    calls the function whistper
+                </li>
+                <li>callback functions:
+                    <pre class="code">
+                        function doMath(x, y, func) {
+                            return func(x,y);
+                        }
+                    </pre>
+                </li>
+                <li>
+                    anonymous callback function:
+                    <pre class="code">
+                        doMath (3, 4, function (a, b) {
+                            console.log (a ** b);
+                        <span class="comment">
+                            // ** does exponents, a ** b power.
+                            // wish I knew that a few days ago....  
+                        </span>
+                        });
+                    </pre>
+                </li>
+            </ul>
+            <li>
+                and.... (I think he's setting us up for something here) if you want to iterate through an array of functions:
+                <pre class="code">
+                    function doAllMath(a, b, mathFuncs) {
+                        for (let func of mathFuncs) {
+                            func(a,b);
+                            console.log(func(a,b));
+                        }
+                    }
+                </pre>
+            </li>
+            <ul class="b">
+                <li>if we add more functions to the mathFuncs array then call doAllMath(), we get the new one automatically</li>
+            </ul>
+            <li class="comment">
+                OK, it's starting to bother me that we're calling arithmetic &ldquo;math.&rdquo; 
+                OK, got that off my chest. Carry on.
+            </li>
+            <li>bottom line, this unit is about methods that expect you to be entering an array as the argument</li>
+        </ul>
+        <li>forEach</li>
+        <ul class="a">
+            <li>simpleist one of these, easy to understand, but not necessarily the most important one to know</li>
+            <li>loop through an array, runs a callback function for each element of that array, then returns "undefined."</li>
+            <li>
+                so like this extremely simple example
+                <pre class="code">
+                    let arr = [1, 2, 3];
+                    arr.forEach(function(value, index, array){
+                        console.log(value);
+                    });
+                    <span class="comment">
+                        // shows in console: 
+                            // 1
+                            // 2
+                            // 3
+                            // undefined
+                    </span>
+                </pre>
+                <span class="comment">
+                    (btw, that one doesn't use 
+                    <span class="code">index</span> or <span class="code">array</span>
+                    , so stop looking for them)
+                </span>
+            </li>
+            <li>see <a href="./js-array-methods-forEach-demo/forEach/index.html"></a></li>
+            <li>
+                a little explanation of that 
+                <span class="code">index</span> or <span class="code">array</span>
+                we ignored above, which are optional arguments<sup>*</sup> in the forEach command:
+            </li>
+            <ul class="b">
+                <li>we could see them all in the first example of the code linked above</li>
+                <li><pre class="code">
+                    const colors = ['teal', 'cyan', 'peach', 'purple'];
+                    colors.forEach(console.log);
+                    // the console.log (without parenthesese, which is weird) shows: 
+                        // teal 0 > Array(4)
+                        // cyan 1 > Array(4)
+                        // peach 2 > Array(4)
+                        // purple 3 > Array(4)
+                </pre></li>
+                <li>what shows in the console is <span class="code">value</span>, <span class="code">index</span>, <span class="code">array</span></li>
+                <li>yes, this can be done as easily with a for...of loop</li>
+                <li>BUT, for...of is new, forEach is not. No need to write with it, but you'll find it in legacy code</li>
+            </ul>
+            <br>
+            <li class="footnote"><sup>*</sup> 
+                I don't think &ldquo;argument&rdquo; is the right term... products? results? 
+                Whatever, they're available any time we use forEach, although the array is rarely used IRL
+            </li>
+        </ul>
+        <li>how we can build out own <span class="code">forEach</span></li>
+        <ul class="a">
+            <li>we'll do it a little differently, like it'll be a function call instead of a . thingie</li>
+            <li>but the core functionality is the same:</li>
+            <ul class="b">
+                <li>loops through an array</li>
+                <li>runs a callback function on each value in that array</li>
+                <li>returns <span class="comment code">undefined</span></li>
+            </ul>
+            <li>
+                and the call's a little something like this: 
+                <pre class="code">
+                myForEach([4,5,6], function() {
+                    <span class="comment">some logic you want to do on the array</span>
+                })
+            </pre></li>
+        </ul>
+        <li>map <a href="http://curric.rithmschool.com/springboard/lectures/js-array-methods-map/">handout</a></li>
+        <li>map</li>
+        <ul class="a">
+            <li></li>
+        </ul>
+    </ol>
 </body>
 </html>
