@@ -167,7 +167,88 @@
         <li>map <a href="http://curric.rithmschool.com/springboard/lectures/js-array-methods-map/">handout</a></li>
         <li>map</li>
         <ul class="a">
+            <li>looks realatively simple based on the handout, and Colt says it's very useful and commonly used</li>
+            <li>similar to forEach in that you pass in a callback function and it calls it once for each item in the array</li>
+            <li>BUT, map creates a new array containing the result of the function for each item in the array</li>
+            <li>
+                like this:
+                <pre class="code">
+                    let numbers = [1,2,3];
+                    numbers.map(function(value, index, array) {
+                        return value * 10;
+                    });
+                    
+                    <span class="comment">
+                    // [10,20,30]
+                    </span>
+                </pre>
+            </li>
+            <li>gotta make sure we <span class="code">return</span> something, or it's pointless</li>
+            <li>seems very useful working with the DOM</li>
+            <ul class="b">
+                <li>
+                    <span class="code">Array.from()</span> is key:<br> because <span class="code">querySelectorAll()</span> doesn't return an array, it returns an "array-like" object</li>
+            </ul>
+        </ul>
+        <li>writing our own map function</li>
+        <ul class="a">
             <li></li>
+        </ul>
+        <li><a href="http://curric.rithmschool.com/springboard/lectures/js-array-methods-filter/">filter handout</a></li>
+        <li>filter</li>
+        <ul class="a">
+            <li>creates a new array of filtered elements</li>
+            <li>loops through existing array, running callback function on each value</li>
+            <ul class="b">
+                <li>if values is true, that value is added to the new array</li>
+                <li>if false, move on</li>
+            </ul>
+            <li>note: the callback function does not need an if/else statement because we're only using the true returns</li>
+            <li>also note, you'll usually end up with a shorter array, unlike <span class="code">map</span></li>
+            <li>see the first half or so of <a href="js-array-methods-forEach-demo/filter/index.html"></a>'s <a href="js-array-methods-forEach-demo/filter/app-tor.js">script</a></li>
+            <li>
+                syntax: <pre class="code">
+                    <span class="comment">array</span>.filter(callback(<span class="comment">item</span>, <span class="comment">index</span>, <span class="comment">array</span>) {
+                        return <span class="comment">boolean test</span>
+                    });
+                </pre>
+            </li>
+        </ul>
+        <li>map <b>and</b> filter</li>            
+        <ul class="a">
+            <li>combing those two methods</li>
+            <li>like on his todo list, we can use <span class="code">Array.from</span> and <span class="code">filter</span> to make an array of the completed items as objects</li>
+            <li>then use <span class="code">map</span> to make a list of completed items</li>
+            <li>see the second part of <a href="js-array-methods-forEach-demo/filter/index.html"></a>'s <a href="js-array-methods-forEach-demo/filter/app-tor.js">script</a> (the part that works with the markup todo list</li>
+            <li>
+                syntax of the two combined: 
+                <pre class="code">
+                    function() {
+                        return <span class="comment">array</span>
+                        .filter(<span class="comment">value</span>) {
+                            return <span class="comment">boolean involving value</span>;
+                        })
+                        .map(function(<span class="comment">value</span>) {
+                            return <span class="comment">boolean involving value</span>;
+                        });
+                    }
+                </pre>
+            </li>
+        </ul>
+        <li>writing filter as a function</li>
+        <ul class="a">
+            <li>see the last funciton of <a href="js-array-methods-forEach-demo/filter/index.html"></a>'s <a href="js-array-methods-forEach-demo/filter/app-tor.js">script</a></li>
+            <li><pre class="code">
+                function coltsFilter(arr, callback) {
+                    const filteredArray = [];
+                    for (let i = 0; i < arr.length; i++) {
+                        if (callback(arr[i], i, arr)) {
+                            filteredArray.push(arr[i])
+                        }
+                    }
+                    return filteredArray;
+                }
+            </pre></li>
         </ul>
     </ol>
 </body>
