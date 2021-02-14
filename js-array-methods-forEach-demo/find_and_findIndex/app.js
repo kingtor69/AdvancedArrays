@@ -80,13 +80,13 @@ myFind(scores, function(score) {
 	return score > 100;
 });
 
-function myFindIndex(arr, callback) {
+function myfindIndex(arr, callback) {
 	for (let i = 0; i < arr.length; i++) {
 		if (callback(arr[i], i, arr) === true) return i;
 	}
 	return -1;
 }
 
-myFindIndex(scores, function(score) {
+myfindIndex(scores, function(score) {
 	return score !== 0 && score % 2 == 0;
 });

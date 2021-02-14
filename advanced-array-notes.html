@@ -251,5 +251,142 @@
             </pre></li>
         </ul>
     </ol>
+    <h2>8.2.x more advanced array methods</h2>
+    <h3>some, every, find, findIndex</h3>
+    <ol>
+        <li>some and every <a href="http://curric.rithmschool.com/springboard/lectures/js-array-methods-some-every/">handout</a></li>
+        <ul class="a">
+            <li><span class="code">some</span> can be used on strings</li>
+            <li class="done">I wonder if others of these advanced "array" methods can be</li>
+            <li>using these methods on strings involves splitting the string, although I'm not quite sure I understand what's happening under the hood here:
+                <pre class="code">
+                    function hasQuestionMark(str){
+                        return <i>str.split('')</i>.some(function(value){
+                          return value === '?';
+                        });
+                      }
+                </pre>
+                [my emphasis]
+            </li>
+            <li class="done">Ah, that splits the string into an array of individual characters, so yes, you could do it with any array method</li>
+        </ul>
+        <li>some and every</li>
+        <ul class="a">
+            <li>both always return a boolean value</li>
+            <li class="code">some:</li>
+            <ul class="b">
+                <li>does the array pass "some" callback test</li>
+                <li>some languages call is "any," but JS goes with "some"</li>
+                <li>
+                    <pre class="code">
+                        let numbers = [1,2,3];
+
+                        numbers.some(function(value, index, array) {
+                            return value < 3;
+                        });
+                        <span class="comment">
+                        // true
+                        </span>
+                        <hr>
+                        numbers.some(function(value, index, array){
+                            return value > 10;
+                        });
+                        <span class="comment">
+                        // false</span>
+                    </pre>
+                </li>
+                <li>more examples in the script on <a href="./8_2-some-every-find-findIndex/js-array-methods-some-every-demo/index.html">this page</a>.</li>
+                <li>fun little side thing I did:  
+                    <pre class="code">
+                        function booleanEnglish (boolean) {
+                            return boolean ? 'yes' : 'no';
+                        }
+                        
+                        function englishBoolean (yesOrNo) {
+                            if (yesOrNo === 'yes') {
+                                return true;
+                            } else if (yesOrNo === 'no') {
+                                return false;
+                            } else {
+                                return undefined;
+                            }
+                        }
+                    </pre>
+                </li>
+            </ul>
+            <li class="code">every</li>
+            <ul class="b">
+                <li>same kind of thing, but looking for every value to pass (called 'all' in some other languages)</li>
+            </ul>
+            <li>notice you could pretty much use either to do the same thing, it's just how you want to think of it</li>
+            <li>practical usage (actually using HTML):</li>
+            <ul class="b">
+                <li>when user clicks submit, we want to check if all boxes are checked</li>
+                <li>you can see how this works on the <a href="./8_2-some-every-find-findIndex/js-array-methods-some-every-demo/index.html">page</a> (same as above)</li>
+            </ul>
+        </ul>
+        <li>writing <a href="./8_2-some-every-find-findIndex/js-array-methods-some-every-demo/index.html">our own</a> as functions</li>
+        <ul class="b">
+            <li>also see <a href="./8_2-some-every-find-findIndex/js-array-methods-some-every-demo/app-tor.js">the JavaScript</a></li>
+        </ul>
+        <li><a href="https://github.com/kingtor69/some-every-find-findIndex-exercises/tree/main/8_2_4-exercises-some-every">exercises</a></li>
+        <li>find and findIndex <a href="http://curric.rithmschool.com/springboard/lectures/js-array-methods-find-findIndex/">handout</a></li>
+        <ul class="a">
+            <li><span class="code">find</span> returns the first value to match the boolean test, or <span class="comment">undefined</span> if none do</li>
+            <ul class="b">
+                <li>what it's doing: <pre class="code">
+                    function find(array, callback){
+                        for(let i = 0; i < array.length; i++){
+                          if(callback(array[i], i, array) === true){
+                            return array[i]
+                          }
+                        }
+                      }
+                </pre></li>
+                <li>syntax: <pre class="code">
+                    arr.find(function(val, i, arr){
+                        return <span class="comment">boolean equation</span>
+                      });
+                </pre></li>
+            </ul>
+            <li><span class="code">findIndex</span> returns the index of the first matching value, or <span class="comment">-1</span> if there are no matches</li>
+            <ul class="b">
+                <li>what it's doing: <pre class="code">
+                    function findIndex(array, callback){
+                        for(let i = 0; i < array.length; i++){
+                          if(callback(array[i], i, array) === true){
+                            return i;
+                          }
+                        }
+                        return -1;
+                      }
+                </pre></li>
+                <li>syntax: <pre class="code">
+                    arr.findIndex(function(value, index, array){
+                        return <span class="comment">boolean equation</span>;
+                    });
+                </pre></li>
+                <li>similar, but superior, to <span class="code">indexOf</span></li>
+            </ul>
+        </ul>
+        <li>find and findIndex</li>
+        <ul class="a">
+            <li><span class="code">find</span></li>
+            <ul class="b">
+                <li>note: if you're looking for a "find all," you'd use <span class="code">filter</span></li>
+                <li>also note: <span class="code">find</span> yields the same returnStr as returnArr[0] from <span class="code">filter</span></li>
+            </ul>
+            <li><span class="code">findIndex</span></li>
+            <ul class="b">
+                <li>finds the index of the first match</li>
+                <li>it's better than <span class="code">indexOf</span> because of the boolean expression</li>
+                <ul class="c">
+                    <li><span class="code">indexOf</span> only finds a specific value, whereas: </li>
+                    <li><span class="code">findIndex</span> works with a boolean and can be used to local something like the first even number no matter which one it is</li>
+                </ul>
+            </ul>
+
+        </ul>
+    </ol>
 </body>
 </html>
