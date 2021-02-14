@@ -385,7 +385,36 @@
                     <li><span class="code">findIndex</span> works with a boolean and can be used to local something like the first even number no matter which one it is</li>
                 </ul>
             </ul>
-
+            <li>you can use this to split a sorted array into before and after arrays:</li>
+            <ul class="c">
+                <li>
+                    <pre class="code">
+                        function partition (arr, pivot) {
+                            const pivotIdx = arr.findIndex(el=>{
+                                return el > pivot;
+                            });
+                            const less = arr.slice(0, pivotIdx);
+                            const more = arr.slice(pivotIdx);
+                            return [less, more];
+                        };
+                    </pre>
+                </li>
+                <li>I noticed you could do this with <span class="code">filter</span>, but it would take two <span class="code">filter</span>s instead of one <span class="code">findIndex</span>: <pre class="code">
+                    function partitionFilter (arr, pivot) {
+                        const less = arr.filter(num => {
+                            return num <= pivot;
+                        });
+                        const more = arr.filter(num => {
+                            return num > pivot;
+                        });
+                        return [less, more];
+                    }
+                </pre></li>
+                <li>(and that's confirmed with testing)</li>
+                <li>my thought on why to use findIndex instead is you're not writing two different boolean tests for the before and after, you're using the same test and splitting at the index, so it's less prone to error</li>
+            </ul>
+            <li>for more, see <a href="8_2-some-every-find-findIndex/js-array-methods-find-findindex-demo/index.html">the page</a></li>
+            <li>and/or look straight at <a href="8_2-some-every-find-findIndex/js-array-methods-find-findindex-demo/app-tor.js">the script</a></li>
         </ul>
     </ol>
 </body>
